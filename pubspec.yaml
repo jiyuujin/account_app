@@ -1,0 +1,28 @@
+name: account_app
+description: A new Flutter application.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.11.0 <3.0.0"
+
+dependencies:
+  charts_flutter:
+    git:
+      url: git://github.com/google/charts.git
+      path: charts_flutter
+  cupertino_icons: ^1.0.2
+  flutter:
+    sdk: flutter
+  hooks_riverpod: ^0.14.0+4
+  http: ^0.13.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  pedantic_mono: ^1.11.0+2
+
+flutter:
+  uses-material-design: true
