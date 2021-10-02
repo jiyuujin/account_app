@@ -6,23 +6,21 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.11.0 <3.0.0"
+  sdk: ">=2.14.0 <3.0.0"
 
 dependencies:
-  charts_flutter:
-    git:
-      url: git://github.com/google/charts.git
-      path: charts_flutter
   cupertino_icons: ^1.0.2
+  fl_chart: ^0.40.0
   flutter:
     sdk: flutter
-  hooks_riverpod: ^0.14.0+4
+  flutter_hooks: ^0.18.0
+  hooks_riverpod: ^1.0.0-dev.7
   http: ^0.13.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  pedantic_mono: ^1.11.0+2
+  pedantic_mono: ^1.14.0+1
 
 flutter:
   uses-material-design: true

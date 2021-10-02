@@ -42,7 +42,7 @@ class BookList extends StatelessWidget {
                       child: Column(
                         children: <Widget>[
                           _createHouseholdAccountBookDetail(
-                              tab.text, snapshot.data),
+                              tab.text!, snapshot.data!),
                         ],
                       ),
                     );

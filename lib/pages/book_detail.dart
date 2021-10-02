@@ -1,8 +1,8 @@
 import 'package:account_app/drawer_menu.dart';
 import 'package:account_app/entity/account.dart';
-import 'package:account_app/entity/pie.dart';
 import 'package:account_app/http/fetch.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:account_app/pages/chart_container.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class BookDetail extends StatelessWidget {
@@ -26,16 +26,32 @@ class BookDetail extends StatelessWidget {
             ),
             drawer: DrawerMenu(),
             body: Center(
-              child: charts.PieChart(
-                generateData(snapshot.data),
-                animate: true,
-                animationDuration: const Duration(seconds: 1),
-                defaultRenderer: charts.ArcRendererConfig(
-                  arcRendererDecorators: [
-                    charts.ArcLabelDecorator(
-                        labelPosition: charts.ArcLabelPosition.inside)
-                  ],
-                ),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ChartContainer(
+                        title: '収入支出',
+                        color: const Color(0x00000000),
+                        chart: PieChart(
+                          PieChartData(
+                            sections: [
+                              PieChartSectionData(
+                                value: generateData(
+                                    snapshot.data!, Account.spendingFlg),
+                                title: '支出',
+                                color: const Color(0xffed733f),
+                              ),
+                              PieChartSectionData(
+                                value: generateData(
+                                    snapshot.data!, Account.incomeFlg),
+                                title: '収入',
+                                color: const Color(0xFF733FED),
+                              ),
+                            ],
+                          ),
+                        )),
+                  ),
+                ],
               ),
             ),
           );
@@ -47,33 +63,21 @@ class BookDetail extends StatelessWidget {
     );
   }
 
-  List<charts.Series<Pie, String>> generateData(
-      List<Account> householdAccountDataList) {
-    final _pieData = <charts.Series<Pie, String>>[];
+  double generateData(List<Account> householdAccountDataList, int type) {
     var income = 0.0;
     var outcome = 0.0;
 
-    householdAccountDataList
-        .forEach((Account householdAccountData) {
+    householdAccountDataList.forEach((Account householdAccountData) {
       if (householdAccountData.type == Account.incomeFlg) {
         income += householdAccountData.money;
       } else {
         outcome += householdAccountData.money;
       }
     });
-    final pieData = [
-      Pie('支出 ', outcome),
-      Pie('収入', income),
-    ];
-    _pieData.add(
-      charts.Series(
-        domainFn: (Pie data, _) => data.activity,
-        measureFn: (Pie data, _) => data.money,
-        id: 'Time spent',
-        data: pieData,
-        labelAccessorFn: (Pie data, _) => '${data.activity}:${data.money}円',
-      ),
-    );
-    return _pieData;
+
+    if (type == Account.spendingFlg) {
+      return outcome;
+    }
+    return income;
   }
 }

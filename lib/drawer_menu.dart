@@ -7,6 +7,7 @@ class DrawerMenu extends StatelessWidget {
   Drawer build(BuildContext context) {
     return Drawer(
       child: ListView(
+        shrinkWrap: true,
         children: <Widget>[
           const UserAccountsDrawerHeader(
             accountName: Text('お問い合わせは以下まで'),
